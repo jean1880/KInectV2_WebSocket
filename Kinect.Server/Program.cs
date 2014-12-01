@@ -9,6 +9,7 @@ namespace Kinect.Server
 {
     class Program
     {
+        static int port = 1337; // specifies which port to run the server from
         static List<IWebSocketConnection> _clients = new List<IWebSocketConnection>();
 
         static Body[] _skeletons = new Body[6];
@@ -29,7 +30,7 @@ namespace Kinect.Server
 
         private static void InitializeConnection()
         {
-            var server = new WebSocketServer("ws://localhost:8181");
+            var server = new WebSocketServer("http://0.0.0.0:" + port);
 
             server.Start(socket =>
             {
@@ -72,8 +73,7 @@ namespace Kinect.Server
                     FrameSourceTypes.Color | 
                     FrameSourceTypes.Depth | 
                     FrameSourceTypes.Infrared | 
-                    FrameSourceTypes.Body |
-                    FrameSourceTypes.Audio
+                    FrameSourceTypes.Body 
                 );
                 _reader.MultiSourceFrameArrived += _reader_MultiSourceFrameArrived;
 
