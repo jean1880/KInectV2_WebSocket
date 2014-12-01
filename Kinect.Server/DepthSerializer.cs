@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Kinect.Server
@@ -57,8 +58,8 @@ namespace Kinect.Server
                 _depthWidth = frame.FrameDescription.Width;
                 _depthHeight = frame.FrameDescription.Height;
                 _depthStride = _depthWidth * Constants.PIXEL_FORMAT.BitsPerPixel / 8;
-                _depthData = new ushort[frame.FrameDescription.BytesPerPixel];
-                _depthPixels = new byte[_depthHeight * _depthWidth * 4];
+                _depthData = new ushort[_depthWidth * _depthHeight];
+                _depthPixels = new byte[_depthHeight * _depthWidth * (PixelFormats.Bgr32.BitsPerPixel + 7) / 8];
                 _depthBitmap = new WriteableBitmap(_depthWidth, _depthHeight, Constants.DPI, Constants.DPI, Constants.PIXEL_FORMAT, null);
             }
 

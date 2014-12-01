@@ -1,4 +1,4 @@
-﻿window.onload = function () {
+window.onload = function() {
     var status = document.getElementById("status");
     var canvas = document.getElementById("canvas");
     var buttonColor = document.getElementById("color");
@@ -7,7 +7,7 @@
 
     var camera = new Image();
 
-    camera.onload = function () {
+    camera.onload = function() {
         context.drawImage(camera, 0, 0);
     }
 
@@ -19,20 +19,20 @@
     status.innerHTML = "Connecting to server...";
 
     // Initialize a new web socket.
-    var socket = new WebSocket("ws://localhost:8181");
+    var socket = new WebSocket("ws://localhost:1337");
 
     // Connection established.
-    socket.onopen = function () {
+    socket.onopen = function() {
         status.innerHTML = "Connection successful.";
     };
 
     // Connection closed.
-    socket.onclose = function () {
+    socket.onclose = function() {
         status.innerHTML = "Connection closed.";
     }
 
     // Receive data FROM the server!
-    socket.onmessage = function (event) {
+    socket.onmessage = function(event) {
         if (typeof event.data === "string") {
             // SKELETON DATA
 
@@ -52,8 +52,7 @@
                     context.fill();
                 }
             }
-        }
-        else if (event.data instanceof Blob) {
+        } else if (event.data instanceof Blob) {
             // RGB FRAME DATA
             // 1. Get the raw data.
             var blob = event.data;
@@ -62,7 +61,9 @@
             window.URL = window.URL || window.webkitURL;
 
             var source = window.URL.createObjectURL(blob);
-
+            source = source.replace('blob:', '');
+            source = source.replace('%3A', ':');
+            source = source.replace('%3A', ':');
             // 3. Update the image source.
             camera.src = source;
 
@@ -71,11 +72,11 @@
         }
     };
 
-    buttonColor.onclick = function () {
+    buttonColor.onclick = function() {
         socket.send("Color");
     }
 
-    buttonDepth.onclick = function () {
+    buttonDepth.onclick = function() {
         socket.send("Depth");
     }
 };

@@ -30,7 +30,7 @@ namespace Kinect.Server
 
         private static void InitializeConnection()
         {
-            var server = new WebSocketServer("http://0.0.0.0:" + port);
+            var server = new WebSocketServer("ws://127.0.0.1:" + port);
 
             server.Start(socket =>
             {
@@ -88,7 +88,7 @@ namespace Kinect.Server
             // Get a reference to the multi-frame
             var reference = e.FrameReference.AcquireFrame();
 
-            using (var frame = reference.ColorFrameReference.AcquireFrame())
+            using (ColorFrame frame = reference.ColorFrameReference.AcquireFrame())
             {
                 if (frame != null)
                 {
@@ -104,7 +104,7 @@ namespace Kinect.Server
                 }
             }
 
-            using (var frame = reference.DepthFrameReference.AcquireFrame())
+            using (DepthFrame frame = reference.DepthFrameReference.AcquireFrame())
             {
                 if (frame != null)
                 {
