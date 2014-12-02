@@ -10,9 +10,11 @@ using System.Windows;
 
 namespace Kinect.Server
 {
-    /// <summary>
-    /// Serializes a Kinect skeleton to JSON fromat.
-    /// </summary>
+    /**
+     * Serializes a Kinect skeleton to JSON fromat.
+     * @class SkeletonSerializer
+     * @statiic
+     */
     public static class SkeletonSerializer
     {
         [DataContract]
@@ -48,13 +50,14 @@ namespace Kinect.Server
             public double Z { get; set; }
         }
 
-        /// <summary>
-        /// Serializes an array of Kinect skeletons into an array of JSON skeletons.
-        /// </summary>
-        /// <param name="skeletons">The Kinect skeletons.</param>
-        /// <param name="mapper">The coordinate mapper.</param>
-        /// <param name="mode">Mode (color or depth).</param>
-        /// <returns>A JSON representation of the skeletons.</returns>
+        /**
+         * Serializes an array of Kinect skeletons into an array of JSON skeletons.
+         * @method Serialize
+         * @param {List<Body>} skeletons
+         * @param {CoordinateMapper} mapper
+         * @param {Mode} mode
+         * @return {String} A JSON representation of the skeletons
+         */
         public static string Serialize(this List<Body> skeletons, CoordinateMapper mapper, Mode mode)
         {
             // instantiate the skeleton JSON object
@@ -77,6 +80,7 @@ namespace Kinect.Server
                     var joint = skeleton.Joints.ElementAt(i);
                     Point point = new Point();
 
+                    // depending on which mode the user is in, system will map the points to the frame spacce 
                     switch (mode)
                     {
                         case Mode.Color:
@@ -95,6 +99,7 @@ namespace Kinect.Server
                             break;
                     }
 
+                    // add the joints to the json object
                     jsonSkeleton.Joints.Add(new JSONJoint
                     {
                         Name = joint.Key.ToString().ToLower(),
@@ -104,18 +109,21 @@ namespace Kinect.Server
                     });
                 }
 
-
+                // add the completed skeleton to the json object
                 jsonSkeletons.Skeletons.Add(jsonSkeleton);
             }
 
+            // return the json string
             return Serialize(jsonSkeletons);
         }
 
-        /// <summary>
-        /// Serializes an object to JSON.
-        /// </summary>
-        /// <param name="obj">The specified object.</param>
-        /// <returns>A JSON representation of the object.</returns>
+        /**
+         * Serializes an object to JSON.
+         * @method Serialize
+         * @param {Object} obj
+         * @return {string}
+         * @static
+         */
         private static string Serialize(object obj)
         {
             DataContractJsonSerializer serializer = new DataContractJsonSerializer(obj.GetType());
