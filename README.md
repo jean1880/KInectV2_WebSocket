@@ -7,8 +7,8 @@ Demo of Kinect V2 application making use of web socket, this is a rebuilt versio
 
 Prerequisites
 ---
-* [Kinect for Windows](http://amzn.to/1k7rquZ) or [Kinect for XBOX](http://amzn.to/1dO0R0s) sensor
-* [Kinect for Windows SDK v1.8](http://go.microsoft.com/fwlink/?LinkID=323588)
+* [Kinect for Windows](http://goo.gl/qYrkJu) sensor
+* [Kinect for Windows SDK v2.0](http://goo.gl/CSc6lV)
 
 WebSockets
 ---
